@@ -1,6 +1,6 @@
 import random as rand
-import sys 
-import os 
+import sys
+import os
 
 # TODO:
 # impl rect thickness
@@ -8,27 +8,26 @@ import os
 # some sizes of rects go out of bounds
 # cant fill entire ppm with a color from a rect
 # no bounds checking
-# can only modify clean pixel map - can't add onto it 
 
 def generate_color_noise(pixels: list) -> list:
-    """
-        Generates random noise
+    """[given a pixel array]
 
-        returns
-        -------
-            list of pixels
+    Args:
+        pixels (list): [list of pixels]
 
-        Params
-        ------
-            pixels : list
-                list of pixel information [r,g,b]
+    Returns:
+        list: [list of modified pixels]
     """
     stack = []
 
     # for all pixels
     for i in range(0, len(pixels)):
         # generate a random pixel - custom rgb value
-        pixel = [f"{rand.randint(0,255)} ", f"{rand.randint(0,255)} ", f" {rand.randint(0,255)} "]
+        pixel = [
+            f"{rand.randint(0,255)} ",
+            f"{rand.randint(0,255)} ",
+            f" {rand.randint(0,255)} ",
+        ]
         # replace that pixel in the array
         pixels[i] = pixel
 
@@ -36,60 +35,55 @@ def generate_color_noise(pixels: list) -> list:
 
 
 def generate_rand_color() -> list:
-    """ returns a random color """
-    pixel = [f"{rand.randint(0,255)} ", f"{rand.randint(0,255)} ", f" {rand.randint(0,255)} "]
-    return pixel 
+    """[generates a random colored pixel]
 
-
-def fill_rect(color: list, pixels: list, w: int, h: int, wb: int, hb: int, roi: list) -> list:
+    Returns:
+        list: [a random colored pixel]
     """
-        fill a Rectange with color 
+    pixel = [
+        f"{rand.randint(0,255)} ",
+        f"{rand.randint(0,255)} ",
+        f" {rand.randint(0,255)} ",
+    ]
+    return pixel
 
-        returns
-        -------
-            list
-                colored pixels in a rectangle
 
-        params
-        ------
+def fill_rect(
+    color: list, pixels: list, w: int, h: int, wb: int, hb: int, roi: list
+) -> list:
+    """[fills a rectangle full of a colors]
 
-            pixels : list
-                list of pixels [r,g,b]
+    Args:
+        color  (list): [list of rgb values representing a pixel]
+        pixels (list): [list of pixels]
+        w      (int):  [width of image]
+        h      (int):  [height of image]
+        wb     (int):  [width of box]
+        hb     (int):  [height of box]
+        roi    (list): [region of interest generated from top_left corner of rect]
 
-            w : int
-                height of pixel map 
+    Returns:
+        list: [list of pixel (modified)]
+    """
 
-            h : int
-                width of pixel map 
-
-            wb : int
-                width of the rect
-
-            hb : int
-                height of the rect
-
-            roi : tuple
-                region of interest, ordered from top left
-
-        """
     # get roi of rect
-    t_lft = (roi[0]*w) + roi[1] + 1
+    t_lft = (roi[0] * w) + roi[1] + 1
 
     # row & col pointer
     r_ptr = 0
     w_ptr = 0
 
     # Render Col
-    while(True):
+    while True:
 
         # break if we are at the correct height
         if r_ptr == hb:
             break
 
-        # get first pixel of column and draw it 
-        pixels[t_lft + r_ptr*w] = color
+        # get first pixel of column and draw it
+        pixels[t_lft + r_ptr * w] = color
         # store column to paint
-        tmp = t_lft + r_ptr*w
+        tmp = t_lft + r_ptr * w
         # increment row pointer
         r_ptr += 1
 
@@ -104,66 +98,59 @@ def fill_rect(color: list, pixels: list, w: int, h: int, wb: int, hb: int, roi: 
             if w_ptr == wb:
                 w_ptr = 0
 
-    return pixels 
+    return pixels
 
 
+def fill_rect_of_random_colors(
+    pixels: list, w: int, h: int, wb: int, hb: int, roi: list
+) -> list:
+    """[fills a rectangle full of a random colors]
 
-def fill_rect_of_random_colors(pixels: list, w: int, h: int, wb: int, hb: int, roi: list) -> list:
+    Args:
+        pixels (list): [list of pixels]
+        w      (int):  [width of image]
+        h      (int):  [height of image]
+        wb     (int):  [width of box]
+        hb     (int):  [height of box]
+        roi    (list): [region of interest generated from top_left corner of rect]
+
+    Returns:
+        list: [list of pixel (modified)]
     """
-        Fill a Rectange with random colors 
-
-        returns
-        -------
-            list
-                random colored pixels in a rectangle
-
-        params
-        ------
-            pixels : list
-                list of pixels [r,g,b]
-
-            w : int
-                height of pixel map 
-
-            h : int
-                width of pixel map 
-
-            wb : int
-                width of the rect
-
-            hb : int
-                height of the rect
-
-            roi : tuple
-                region of interest, ordered from top left
-
-        """
 
     # get roi of rect
-    t_lft = (roi[0]*w) + roi[1] + 1
+    t_lft = (roi[0] * w) + roi[1] + 1
 
     # row & col pointer
     r_ptr = 0
     w_ptr = 0
 
     # Render Col
-    while(True):
+    while True:
 
         # break if we are at the correct height
         if r_ptr == hb:
             break
 
-        # get first pixel of column and draw it 
-        pixels[t_lft + r_ptr*w] = [f"{rand.randint(0,255)} ", f"{rand.randint(0,255)} ", f" {rand.randint(0,255)} "]
+        # get first pixel of column and draw it
+        pixels[t_lft + r_ptr * w] = [
+            f"{rand.randint(0,255)} ",
+            f"{rand.randint(0,255)} ",
+            f" {rand.randint(0,255)} ",
+        ]
         # store column to paint
-        tmp = t_lft + r_ptr*w
+        tmp = t_lft + r_ptr * w
         # increment row pointer
         r_ptr += 1
 
         # render row
         for i in range(0, wb):
             # take first pixel and offset it by the with of the rect
-            pixels[tmp + w_ptr] = [f"{rand.randint(0,255)} ", f"{rand.randint(0,255)} ", f" {rand.randint(0,255)} "]
+            pixels[tmp + w_ptr] = [
+                f"{rand.randint(0,255)} ",
+                f"{rand.randint(0,255)} ",
+                f" {rand.randint(0,255)} ",
+            ]
             # increment width pointer
             w_ptr += 1
 
@@ -171,73 +158,58 @@ def fill_rect_of_random_colors(pixels: list, w: int, h: int, wb: int, hb: int, r
             if w_ptr == wb:
                 w_ptr = 0
 
-    return pixels 
+    return pixels
 
 
-def draw_rect(color: list, pixels: list, w: int, h: int, wb: int, hb: int, roi: list) -> list:
+def draw_rect(
+    color: list, pixels: list, w: int, h: int, wb: int, hb: int, roi: list
+) -> list:
+    """[draw a (border)rectangle full of a specifed color]
+
+    Args:
+        color  (list): [list of rgb values representing a pixel]
+        pixels (list): [list of pixels]
+        w      (int):  [width of image]
+        h      (int):  [height of image]
+        wb     (int):  [width of box]
+        hb     (int):  [height of box]
+        roi    (list): [region of interest generated from top_left corner of rect]
+
+    Returns:
+        list: [list of pixel (modified)]
     """
-        draw a Rectange with color 
 
-        returns
-        -------
-            list
-                random colored pixels in a rectangle
-
-        params
-        ------
-            color: list
-                pixel color information 
-
-            pixels : list
-                list of pixels [r,g,b]
-
-            w : int
-                height of pixel map 
-
-            h : int
-                width of pixel map 
-
-            wb : int
-                width of the rect
-
-            hb : int
-                height of the rect
-
-            roi : tuple
-                region of interest, ordered from top left
-
-        """
     # get roi of rect
-    t_lft = (roi[0]*w) + roi[1] + 1
+    t_lft = (roi[0] * w) + roi[1] + 1
 
     # row & col pointer
     r_ptr = 0
     w_ptr = 0
 
     # Render Col
-    while(True):
+    while True:
 
         # break if we are at the correct height
         if r_ptr == hb:
             break
 
-        # get first pixel of column and draw it 
-        pixels[t_lft + r_ptr*w] = color
-        tmp = t_lft + r_ptr*w
+        # get first pixel of column and draw it
+        pixels[t_lft + r_ptr * w] = color
+        tmp = t_lft + r_ptr * w
         # increment row pointer
         r_ptr += 1
 
         # render row
         for i in range(0, wb):
             # if we are at the end of the rect draw a pixel
-            if w_ptr == wb-1:
+            if w_ptr == wb - 1:
                 # take first pixel and offset it by the with of the rect
-                pixels[tmp + w_ptr] = color 
+                pixels[tmp + w_ptr] = color
                 # increment width pointer
 
             if r_ptr == 1 or r_ptr == hb:
                 # take first pixel and offset it by the with of the rect
-                pixels[tmp + w_ptr] = color 
+                pixels[tmp + w_ptr] = color
                 # increment width pointer
 
             w_ptr += 1
@@ -245,106 +217,96 @@ def draw_rect(color: list, pixels: list, w: int, h: int, wb: int, hb: int, roi: 
             # reset the ptr if we are at the correct width
             if w_ptr == wb:
                 w_ptr = 0
-    return pixels 
+    return pixels
 
 
-def draw_rect_rand_color(color: list, pixels: list, w: int, h: int, wb: int, hb: int, roi: list) -> list:
+def draw_rect_rand_color(
+    color: list, pixels: list, w: int, h: int, wb: int, hb: int, roi: list
+) -> list:
+    """[draws a rectangle full of a random colors]
+
+    Args:
+        pixels (list): [list of pixels]
+        w      (int):  [width of image]
+        h      (int):  [height of image]
+        wb     (int):  [width of box]
+        hb     (int):  [height of box]
+        roi    (list): [region of interest generated from top_left corner of rect]
+
+    Returns:
+        list: [list of pixel (modified)]
     """
-        fill a Rectange with color 
-
-        returns
-        -------
-            list
-                colored pixels in a rectangle
-
-        params
-        ------
-
-            pixels : list
-                list of pixels [r,g,b]
-
-            w : int
-                height of pixel map 
-
-            h : int
-                width of pixel map 
-
-            wb : int
-                width of the rect
-
-            hb : int
-                height of the rect
-
-            roi : tuple
-                region of interest, ordered from top left
-
-        """
     # get roi of rect
-    t_lft = (roi[0]*w) + roi[1] + 1
+    t_lft = (roi[0] * w) + roi[1] + 1
 
     # row & col pointer
     r_ptr = 0
     w_ptr = 0
 
     # Render Col
-    while(True):
+    while True:
 
         # break if we are at the correct height
         if r_ptr == hb:
             break
 
-        # get first pixel of column and draw it 
-        pixels[t_lft + r_ptr*w] = [f"{rand.randint(0,255)} ", f"{rand.randint(0,255)} ", f" {rand.randint(0,255)} "]
-        tmp = t_lft + r_ptr*w
-        # increment row pointer
-        r_ptr += 1
+        try:
+            # get first pixel of column and draw it
+            pixels[t_lft + r_ptr * w] = [
+                f"{rand.randint(0,255)} ",
+                f"{rand.randint(0,255)} ",
+                f" {rand.randint(0,255)} ",
+            ]
+            tmp = t_lft + r_ptr * w
+            # increment row pointer
+            r_ptr += 1
 
-        # render row
-        for i in range(0, wb):
-            # if we are at the end of the rect draw a pixel
-            if w_ptr == wb-1:
-                # take first pixel and offset it by the with of the rect
-                pixels[tmp + w_ptr] = [f"{rand.randint(0,255)} ", f"{rand.randint(0,255)} ", f" {rand.randint(0,255)} "]
-                # increment width pointer
+            # render row
+            for i in range(0, wb):
+                # if we are at the end of the rect draw a pixel
+                if w_ptr == wb - 1:
+                    # take first pixel and offset it by the with of the rect
+                    pixels[tmp + w_ptr] = [
+                        f"{rand.randint(0,255)} ",
+                        f"{rand.randint(0,255)} ",
+                        f" {rand.randint(0,255)} ",
+                    ]
+                    # increment width pointer
 
-            if r_ptr == 1 or r_ptr == hb:
-                # take first pixel and offset it by the with of the rect
-                pixels[tmp + w_ptr] = color 
-                # increment width pointer
+                if r_ptr == 1 or r_ptr == hb:
+                    # take first pixel and offset it by the with of the rect
+                    pixels[tmp + w_ptr] = color
+                    # increment width pointer
 
-            w_ptr += 1
+                w_ptr += 1
 
-            # reset the ptr if we are at the correct width
-            if w_ptr == wb:
-                w_ptr = 0
+                # reset the ptr if we are at the correct width
+                if w_ptr == wb:
+                    w_ptr = 0
 
-    return pixels 
+        except IndexError:
+            pass
+
+    return pixels
 
 
 def save_as_ppm(pixels: list, w: int, h: int) -> bool:
+    """[Saves ppm file]
+
+    Args:
+        pixels (list): [list of pixels]
+        w      (int):  [width of the image]
+        h      (int):  [height of the image]
+
+    Returns:
+        bool: [if the image was saved]
     """
-        Returns
-        -------
-            bool
-                was the operation successful
+    if os.path.isfile("./pog.ppm"):
+        os.remove("./pog.ppm")
 
-        Params
-        ------
-            pixels : list
-                pixel map in the form of a list
-
-            w : list
-                width of the pixel map
-
-            h : list
-                height of the pixel map
-    """
-    if os.path.isfile('./pog.ppm'):
-        os.remove('./pog.ppm')
-
-    with open('./pog.ppm', 'a') as fd:
+    with open("./pog.ppm", "a") as fd:
         # writing ppm header
-        fd.write(f"P3\n{w} {h}\n255\n")
+        fd.write(f"P3\n{w} {h}\n10\n")
 
         ptr = 0
         try:
@@ -352,7 +314,7 @@ def save_as_ppm(pixels: list, w: int, h: int) -> bool:
             for i in pixels:
                 if ptr == w:
                     ptr = 0
-                    fd.write('\n')
+                    fd.write("\n")
 
                 # Should just be an array of str of len 3 RGB
                 fd.write("".join(i))
@@ -365,24 +327,31 @@ def save_as_ppm(pixels: list, w: int, h: int) -> bool:
 
 
 def test() -> int:
-    w, h = 32,16
-    pixels = [['255',' 255',' 255 '] for i in range(0, w*h)]
+    """[little test function]
+
+    Returns:
+        int: [if the program was successful]
+    """
+    w, h = 256,256 
+    pixels = [["255", " 255", " 255 "] for i in range(0, w * h)]
 
     # draw_rect(generate_rand_color(), pixels, w, h, 17, 12, [1,1])
     # draw_rect_of_random_colors(pixels, w, h, 17, 12, [1,1])
     # draw_rect(generate_rand_color(), pixels, w, h, 17, 12, [1,1])
     # draw_rect(generate_rand_color(), pixels, w, h, 3, 3, [3,3])
     # fill_rect(generate_rand_color(), pixels, w, h, 3, 3, [3,3])
-    draw_rect(generate_rand_color(), pixels, w, h, 3, 3, [1,1])
+    # draw_rect(generate_rand_color(), pixels, w, h, 3, 3, [1,1])
+    # draw_rect_rand_color(generate_rand_color(), pixels, w, h, 16, 16, [0, 0])
 
-    # pixels = generate_color_noise(pixels)
+    pixels = generate_color_noise(pixels)
 
     if not save_as_ppm(pixels, w, h):
         print("writing file failed")
         exit(1)
 
     print("Success!")
-    return 0 
+    return 0
+
 
 if __name__ == "__main__":
     if "--test" in sys.argv:
