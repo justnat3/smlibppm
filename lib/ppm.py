@@ -9,6 +9,7 @@ import os
 # cant fill entire ppm with a color from a rect
 # no bounds checking
 
+
 def generate_color_noise(pixels: list) -> list:
     """[given a pixel array]
 
@@ -306,7 +307,7 @@ def save_as_ppm(pixels: list, w: int, h: int) -> bool:
 
     with open("./pog.ppm", "a") as fd:
         # writing ppm header
-        fd.write(f"P3\n{w} {h}\n10\n")
+        fd.write(f"P3\n{w} {h}\n255\n")
 
         ptr = 0
         try:
@@ -326,24 +327,129 @@ def save_as_ppm(pixels: list, w: int, h: int) -> bool:
     return True
 
 
+def draw_line_rand_color(pixels: list, w: int, start: tuple, end: tuple) -> list:
+    """[draw a line between two points random color sequence]
+
+    Args:
+        color (list): [rgb value of the line]
+        pixels (list): [list of pixels]
+        w (int): [width of image]
+        start (tuple): [start coordinates]
+        end (tuple): [end coordinates]
+
+    Returns:
+        list: [list of modified pixels]
+    """
+
+    x1 = start[0]
+    y1 = start[1]
+    x2 = end[0]
+    y2 = end[1]
+
+    dx = x2 - x1
+    dy = y2 - y1
+
+    stp = dx if dx > dy else dy
+    xnc = int(dx / stp)
+    ync = int(dy / stp)
+
+    x = x1
+    y = y1
+
+    for i in range(0, stp):
+        print(w, (x, y))
+        put_pixel(generate_rand_color(), pixels, w, (x, y))
+        x += xnc
+        y += ync
+
+
+def draw_line(color: list, pixels: list, w: int, start: tuple, end: tuple) -> list:
+    """[draw a line between two points]
+
+    Args:
+        color (list): [rgb value of the line]
+        pixels (list): [list of pixels]
+        w (int): [width of image]
+        start (tuple): [start coordinates]
+        end (tuple): [end coordinates]
+
+    Returns:
+        list: [list of modified pixels]
+    """
+
+    x1 = start[0]
+    y1 = start[1]
+    x2 = end[0]
+    y2 = end[1]
+
+    dx = x2 - x1
+    dy = y2 - y1
+
+    stp = dx if dx > dy else dy
+    xnc = int(dx / stp)
+    ync = int(dy / stp)
+
+    x = x1
+    y = y1
+
+    for i in range(0, stp):
+        print(w, (x, y))
+        put_pixel(color, pixels, w, (x, y))
+        x += xnc
+        y += ync
+
+
+def put_pixel(color: list, pixels: list, w: int, cord: tuple) -> list:
+    """[Put pixel at coordinate]
+
+    Args:
+        color  (list): [color of the pixel]
+        pixels (list): [list of pixels]
+        w      (int):  [width of the image]
+        cord   (list): [tuple of x,y]
+
+    Returns:
+        list: [list of pixels]
+    """
+
+    x = cord[0]
+    y = cord[1]
+    # x+w*y put pixel at cord
+    pixels[x + w * y] = color
+
+    return pixels
+
+
+def draw_circle() -> list:
+    """[draw a circle]"""
+
+
 def test() -> int:
     """[little test function]
 
     Returns:
         int: [if the program was successful]
     """
-    w, h = 256,256 
+    w, h = 256, 256
     pixels = [["255", " 255", " 255 "] for i in range(0, w * h)]
 
     # draw_rect(generate_rand_color(), pixels, w, h, 17, 12, [1,1])
-    # draw_rect_of_random_colors(pixels, w, h, 17, 12, [1,1])
+    fill_rect(generate_rand_color(), pixels, w, h, 50, 50, [1,1])
     # draw_rect(generate_rand_color(), pixels, w, h, 17, 12, [1,1])
     # draw_rect(generate_rand_color(), pixels, w, h, 3, 3, [3,3])
     # fill_rect(generate_rand_color(), pixels, w, h, 3, 3, [3,3])
     # draw_rect(generate_rand_color(), pixels, w, h, 3, 3, [1,1])
     # draw_rect_rand_color(generate_rand_color(), pixels, w, h, 16, 16, [0, 0])
 
-    pixels = generate_color_noise(pixels)
+    # pixels = generate_color_noise(pixels)
+    # put_pixel(
+    #         generate_rand_color(),
+    #         pixels,
+    #         w,
+    #         (5,12)
+    #     )
+    # draw_line(generate_rand_color(), pixels, w, (1,1), (5,5))
+    # draw_line_rand_color(pixels, w, (1,1), (5,5))
 
     if not save_as_ppm(pixels, w, h):
         print("writing file failed")
