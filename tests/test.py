@@ -1,0 +1,6 @@
+# fill_rect(generate_rand_color(), pixels, w, h, 50, 50, [1,1])
+# draw_rect(generate_rand_color(), pixels, w, h, 3, 3, [3,3])
+# fill_rect(generate_rand_color(), pixels, w, h, 3, 3, [3,3])
+# draw_rect_rand_color(generate_rand_color(), pixels, w, h, 16, 16, [0, 0])
+# draw_line(generate_rand_color(), pixels, w, (1,1), (5,5))
+# draw_line_rand_color(pixels, w, (1,1), (5,5))
