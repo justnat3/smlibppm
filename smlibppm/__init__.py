@@ -1,1 +1,4 @@
-from smlibppm.api import *
+from smlibppm.api import (
+    generate_rand_color,
+    PPM, 
+)
