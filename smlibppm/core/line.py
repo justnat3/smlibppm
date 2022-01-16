@@ -1,4 +1,6 @@
-import random as rand 
+from smlibppm.core.pixel import put_pixel
+from smlibppm.core.ppm import generate_rand_color
+
 
 def draw_line_rand_colors(pixels: list, w: int, start: tuple, end: tuple) -> list:
     """[draw a line between two points random color sequence]
@@ -26,7 +28,7 @@ def draw_line_rand_colors(pixels: list, w: int, start: tuple, end: tuple) -> lis
     xnc = int(dx / stp)
     ync = int(dy / stp)
 
-    x = start[0] 
+    x = start[0]
     y = start[1]
 
     for i in range(0, stp):
