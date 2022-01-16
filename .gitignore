@@ -1,7 +1,4 @@
-<<<<<<< Updated upstream
-__pycache__/
-sphinx-build.exe
-=======
+
 __pycache__/*
 docs/sphinx-build.exe
 *.pyc
@@ -10,4 +7,3 @@ examples/colorful_rect.ppm
 examples/colorful_rect.ppm
 examples/colorful_rect.ppm
 *.ppm
->>>>>>> Stashed changes
