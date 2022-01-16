@@ -26,8 +26,8 @@ def draw_line_rand_colors(pixels: list, w: int, start: tuple, end: tuple) -> lis
     xnc = int(dx / stp)
     ync = int(dy / stp)
 
-    x = x1
-    y = y1
+    x = start[0] 
+    y = start[1]
 
     for i in range(0, stp):
         print(w, (x, y))

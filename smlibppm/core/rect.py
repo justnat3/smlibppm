@@ -173,7 +173,7 @@ def draw_rect(
 
 
 def draw_rect_rand_colors(
-    color: list, pixels: list, w: int, h: int, wb: int, hb: int, roi: list
+    pixels: list, w: int, h: int, wb: int, hb: int, roi: list
 ) -> list:
     """[draws a rectangle full of a random colors]
 
