@@ -1,4 +1,6 @@
 from smlibppm.core.ppm import (
-    generate_rand_color,
-    PPM,
+    PPM
+)
+from smlibppm.core.utils import (
+    generate_rand_color
 )
