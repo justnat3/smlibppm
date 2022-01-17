@@ -39,5 +39,17 @@ if __name__ == "__main__":
     main()
 ```
 
+## Developing
+This library follows the current [Python packaging standards](https://packaging.python.org/en/latest/).
+
+[Poetry](https://python-poetry.org) is the build backend and [Poe](https://github.com/nat-n/poethepoet) is the task runner.
+
+### Docs
+Documentation is available via [Sphinx](https://www.sphinx-doc.org/en/master/)
+and can be built by running:
+```shell
+poetry run poe docs
+```
+
 ## References 
 - http://netpbm.sourceforge.net/doc/ppm.html
