@@ -3,9 +3,14 @@ Small ppm library
 
 ## Test it out! 
 
-```sh
+```shell
 # generate a pixel map of random noise
 $ py ./ppm.py 
+```
+
+You can try out the example in `examples/` by running:
+```shell
+poetry run python circle_example.py
 ```
 
 ## Gettings started

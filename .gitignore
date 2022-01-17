@@ -1,8 +1,7 @@
 docs/sphinx-build.exe
 docs/build/
 dist/
-examples/*
-!examples/__main__.py
+examples/*.ppm
 poetry.lock
 __pycache__/*
 *.pyc
