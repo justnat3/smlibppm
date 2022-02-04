@@ -7,7 +7,6 @@ from smlibppm.core.pixel import put_pixel as _put_pixel
 from smlibppm.core.rect import draw_rect as _draw_rect
 from smlibppm.core.rect import fill_rect as _fill_rect
 from smlibppm.core.line import draw_line as _draw_line
-import random as rand
 import os
 
 # TODO:
@@ -290,18 +289,3 @@ class PPM(object):
                 print(f"FAILED: {err}")
                 return False
         return True
-
-
-def generate_rand_color() -> list:
-    """[generates a random colored pixel]
-
-    Returns:
-        list: [a random colored pixel]
-    """
-    pixel = [
-        f"{rand.randint(0,255)} ",
-        f"{rand.randint(0,255)} ",
-        f" {rand.randint(0,255)} ",
-    ]
-
-    return pixel

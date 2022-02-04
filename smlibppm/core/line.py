@@ -1,5 +1,5 @@
 from smlibppm.core.pixel import put_pixel
-from smlibppm.core.ppm import generate_rand_color
+from smlibppm.core.utils import generate_rand_color
 
 
 def draw_line_rand_colors(pixels: list, w: int, start: tuple, end: tuple) -> list:

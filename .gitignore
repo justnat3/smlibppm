@@ -1,11 +1,9 @@
-
-__pycache__/*
 docs/sphinx-build.exe
+docs/build/
+dist/
+examples/*.ppm
+poetry.lock
+__pycache__/*
 *.pyc
-.vscode/settings.json
-examples/colorful_rect.ppm
-examples/colorful_rect.ppm
-examples/colorful_rect.ppm
 *.ppm
-examples/Screenshot 2021-11-27 213205.png
-__main__.py
+.vscode/settings.json

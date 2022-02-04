@@ -1,0 +1,21 @@
+[tool.poetry]
+name = "smlibppm"
+version = "0.1.0"
+description = "A small library for creating and manipulating PPMs"
+authors = ["Nathan Reed <nreed@linux.com>"]
+license = "MIT"
+
+[tool.poetry.dependencies]
+python = "^3.9"
+
+[tool.poetry.dev-dependencies]
+sphinx = "^4.4.0"
+pytest = "^6.2.5"
+poethepoet = "^0.12.2"
+
+[tool.poe.tasks]
+docs = "poetry run sphinx-build -- docs/source docs/build"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"

@@ -3,7 +3,7 @@ import sys
 
 def main() -> int:
 
-    file = "./examples/colorful_rect.ppm"
+    file = "./examples/circle.ppm"
     # init ppm
     ppm = PPM(256, 256)
 
